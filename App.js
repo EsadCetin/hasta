@@ -1,21 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Signup from './screens/signupscreen';
+import AppLoading from 'expo-app-loading';
+const Stack = createNativeStackNavigator();
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  let [fontsLoaded] = useFonts({
+    Yellowtail_400Regular,
+    Poppins_400Regular,
+    Moul_400Regular,
+    Poppins_500Medium
+  });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Signup">
+          <Stack.Screen name="Signup" options={{ headerShown: false }} component={Signup} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+}
